@@ -1,0 +1,8 @@
+# Local Netlify folder
+.netlify
+
+# Files pending manual deletion (Claude cannot delete, only move here)
+_to_delete/
+
+# macOS
+.DS_Store
