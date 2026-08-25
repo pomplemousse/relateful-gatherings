@@ -8,15 +8,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Quicksand:wght@400;500;600;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 <style>
-  :root{
-    --chocolate:#2A2726; --chocolate-soft:#3d3836;
-    --cream-light:#F5EFE0; --poppy:#D65B5B; --poppy-dark:#b8453f; --white:#FFFBF3;
-  }
-  *{box-sizing:border-box;}
-  body{margin:0; font-family:'Quicksand', sans-serif; color:var(--chocolate); background:var(--white);}
+  /* Colors, .script, and the base reset come from styles.css.
+     Everything below overrides the shared defaults for this
+     page's plainer, article-style layout. */
+  body{margin:0; font-family:'Quicksand', sans-serif; color:var(--chocolate); background:var(--white); overflow-x:visible;}
   h1,h2,h3{font-family:'Fraunces', serif; margin:0 0 .4em 0; line-height:1.2; font-weight:600;}
-  .script{font-family:'Caveat', cursive; font-weight:600;}
   p{line-height:1.7; margin:0 0 1.1em 0;}
   a{color:var(--poppy-dark);}
   .wrap{max-width:640px; margin:0 auto; padding:60px 24px 80px;}
