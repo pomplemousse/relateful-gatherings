@@ -8,6 +8,10 @@
      #the-practice   selects a topic
      #q-what-is-staying  selects that question's topic, opens
                          the card, and scrolls to it
+
+   Note: questions.js still carries a `related` list per question. It is
+   deliberately not rendered — the Related chips were removed from the card
+   design. The data is kept so the feature can come back without rewriting it.
    ============================================================ */
 (function () {
   var listEl  = document.getElementById('topic-list');
@@ -58,20 +62,8 @@
     }
     html += '</div>';
 
-    var hasMore = q.deep || (q.related && q.related.length);
-    if (hasMore) {
-      var deeper = '<div class="deeper" hidden>';
-      if (q.deep) deeper += q.deep;
-      if (q.related && q.related.length) {
-        deeper += '<div class="related"><span class="label">Related</span><div class="chips">';
-        q.related.forEach(function (rid) {
-          var r = find(rid);
-          if (r) deeper += '<a href="#q-' + r.id + '" data-jump="' + r.id + '">' + esc(r.q) + '</a>';
-        });
-        deeper += '</div></div>';
-      }
-      deeper += '</div>';
-      html += deeper;
+    if (q.deep) {
+      html += '<div class="deeper" hidden>' + q.deep + '</div>';
       html += '<button class="more" type="button" aria-expanded="false" aria-controls="q-' + q.id + '">' +
                 '<span class="txt">Tell me more</span><span class="arrow" aria-hidden="true">→</span>' +
               '</button>';
@@ -119,14 +111,6 @@
 
     if (pushHash && history.replaceState) history.replaceState(null, '', '#' + topic.id);
   }
-
-  /* related-question links: switch topic, open the card, scroll to it */
-  cardsEl.addEventListener('click', function (e) {
-    var a = e.target.closest('a[data-jump]');
-    if (!a) return;
-    e.preventDefault();
-    open(a.dataset.jump, true);
-  });
 
   function open(qid, scroll) {
     var q = find(qid);

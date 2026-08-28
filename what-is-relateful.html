@@ -76,6 +76,7 @@
      beside its neighbour — and the wider measure suits long-form reading. */
   .qcard.is-open{box-shadow:0 14px 34px rgba(42,39,38,0.13); transform:none; grid-column:1 / -1;}
   .qcard.is-open .deeper p, .qcard.is-open .deeper ul{max-width:620px;}
+  .qcard .deeper > *:last-child{margin-bottom:18px;}
   .qcard:target{outline:2px solid var(--poppy); outline-offset:3px;}
   .qcard .body{padding:24px 24px 20px; flex:1 0 auto;}
   .qcard .num{
@@ -104,24 +105,11 @@
   }
 
   /* the deeper layer */
-  .qcard .deeper{border-top:1px solid rgba(42,39,38,0.09); padding:20px 24px 4px; display:none;}
+  .qcard .deeper{border-top:1px solid rgba(42,39,38,0.09); padding:20px 24px 2px; display:none;}
   .qcard.is-open .deeper{display:block;}
   .qcard .deeper p{font-size:.97rem; line-height:1.68;}
   .qcard .deeper ul{margin:0 0 1em; padding-left:20px; display:grid; gap:7px;}
   .qcard .deeper li{font-size:.97rem; line-height:1.55;}
-  .qcard .related{margin-top:4px; padding-bottom:18px;}
-  .qcard .related .label{
-    display:block; font-size:.7rem; text-transform:uppercase; letter-spacing:.09em;
-    font-weight:700; opacity:.45; margin-bottom:9px;
-  }
-  .qcard .related .chips{display:flex; flex-wrap:wrap; gap:8px;}
-  .qcard .related a{
-    display:inline-block; background:var(--cream-light); color:var(--chocolate);
-    border-radius:100px; padding:6px 14px; font-size:.84rem; font-weight:600;
-    text-decoration:none; line-height:1.35; transition:background .15s ease;
-  }
-  .qcard .related a:hover{background:var(--cream);}
-
   /* the "tell me more" strip */
   .qcard .more{
     margin-top:auto; width:100%; cursor:pointer; text-align:left;
@@ -188,7 +176,7 @@
     .cards{grid-template-columns:1fr; gap:16px;}
     .qcard .body{padding:20px 20px 18px;}
     .qcard .more{padding:13px 20px;}
-    .qcard .deeper{padding:18px 20px 4px;}
+    .qcard .deeper{padding:18px 20px 2px;}
     .invite-box{padding:34px 26px; gap:24px;}
     .invite-box .rings{display:none;}
   }
