@@ -154,3 +154,140 @@ footer .links{margin-top:14px; font-size:.9rem; opacity:.75;}
 footer .links a{text-decoration:underline; margin:0 8px;}
 
 .callout{max-width:640px; margin:36px auto 0; text-align:center; opacity:.85; font-size:.98rem;}
+
+/* ============================================================
+   MULTI-PAGE ARCHITECTURE (added when the one-pager was split
+   into /what-is-relateful, /gatherings, and /practice).
+   Everything below is used by two or more pages, so it lives
+   here rather than in any single page's local <style>.
+   ============================================================ */
+
+/* ---------- page scaffolding shared by all public pages ----------
+   Scoped to body.site on purpose: basics.html and the internal brand
+   guide share this stylesheet but use their own plain article layout,
+   so bare `section`/`footer` rules must not reach them. */
+.site section{position:relative; padding:110px 0; overflow:hidden;}
+/* Decorative blobs are absolutely positioned, so without this they paint
+   over the static content — visible as a blob across the headline on narrow
+   screens. Lifting the content wrapper keeps text on top. */
+.site section > .wrap{position:relative; z-index:1;}
+.site footer{background:var(--chocolate); color:var(--cream-light); padding:50px 0 100px; text-align:center;}
+
+/* ---------- site nav ----------
+   Capped at four items, forever. "Come to a Gathering" is the
+   only one styled as a button — the other two are support. */
+.sitenav{
+  position:sticky; top:0; z-index:400;
+  background:rgba(245,239,224,0.92); backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(42,39,38,0.08);
+}
+.sitenav .wrap{display:flex; align-items:center; gap:18px; flex-wrap:wrap; padding-top:14px; padding-bottom:14px;}
+.sitenav .brand{
+  font-family:'Fraunces',serif; font-weight:600; font-size:1.12rem;
+  text-decoration:none; margin-right:auto; white-space:nowrap;
+}
+.sitenav .links{display:flex; align-items:center; gap:22px;}
+.sitenav .links a{
+  text-decoration:none; font-weight:600; font-size:.95rem; opacity:.75;
+  padding:4px 0; border-bottom:2px solid transparent; white-space:nowrap;
+}
+.sitenav .links a:hover{opacity:1;}
+.sitenav a[aria-current="page"]{opacity:1; border-bottom-color:var(--poppy);}
+.sitenav .nav-cta{
+  padding:10px 22px; font-size:.95rem; border-bottom:none;
+  box-shadow:0 6px 16px rgba(214,91,91,0.28);
+}
+.sitenav .nav-cta[aria-current="page"]{border-bottom:none;}
+
+/* Below 700px the two supporting links drop to their own row, so the
+   brand and the one call to action always share the first line. */
+@media (max-width:700px){
+  .sitenav .wrap{gap:8px; padding:9px 16px;}
+  .sitenav .brand{font-size:.92rem; order:1;}
+  .sitenav .nav-cta{order:2; padding:8px 13px; font-size:.78rem;}
+  .sitenav .links{order:3; width:100%; gap:18px;}
+  .sitenav .links a{font-size:.84rem;}
+}
+
+/* ---------- the flow / nested-circle diagram ---------- */
+.practice{background:var(--cream-light);}
+.practice .grid{display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;}
+.practice .visual{position:relative; height:340px;}
+.practice h2{font-size:clamp(2rem,4vw,2.6rem);}
+.practice .steps{margin-top:20px; display:grid; gap:14px;}
+.practice .steps p{margin:0;}
+.flow-circle{
+  position:absolute; border-radius:50%; border:2px dashed var(--poppy); opacity:.55;
+  animation:ring-pulse 3.6s ease-in-out infinite;
+}
+.flow-circle.c1{width:300px;height:300px; top:20px; left:20px; animation-delay:.6s;}
+.flow-circle.c2{width:190px;height:190px; top:75px; left:75px; border-style:solid; border-color:var(--sage); opacity:.6; animation-delay:.3s;}
+.flow-circle.c3{width:90px;height:90px; top:125px; left:125px; background:var(--poppy); opacity:.85; border:none;}
+.flow-circle .label{
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  font-family:'Caveat',cursive; font-weight:700; font-size:1.3rem; color:var(--white); text-align:center; padding:10px;
+}
+.ring-tag{
+  position:absolute; left:50%; transform:translateX(-50%);
+  background:var(--white); border-radius:100px; padding:5px 14px;
+  font-family:'Caveat',cursive; font-weight:700; font-size:1rem;
+  box-shadow:0 4px 12px rgba(42,39,38,0.12); white-space:nowrap; z-index:2;
+}
+.ring-tag.tag-we{top:6px; color:var(--poppy-dark);}
+.ring-tag.tag-you{top:60px; color:var(--sage);}
+
+/* ---------- what-to-expect timeline ---------- */
+.expect{background:var(--white);}
+.expect h2{text-align:center; font-size:clamp(2rem,4vw,2.6rem);}
+.timeline{max-width:640px; margin:40px auto 0; position:relative; padding-left:30px;}
+.timeline::before{content:'';position:absolute; left:6px; top:6px; bottom:6px; width:2px; background:repeating-linear-gradient(to bottom, var(--poppy) 0 6px, transparent 6px 12px);}
+.t-item{position:relative; margin-bottom:32px;}
+.t-item::before{content:''; position:absolute; left:-30px; top:4px; width:14px; height:14px; border-radius:50%; background:var(--poppy);}
+.t-item .time{font-family:'Caveat',cursive; font-size:1.3rem; color:var(--poppy-dark); font-weight:700; display:block;}
+.t-item p{margin:2px 0 0;}
+
+/* ---------- facilitator ---------- */
+.host{background:var(--cream);}
+.host .grid{display:grid; grid-template-columns:280px 1fr; gap:56px; align-items:center;}
+.host-photo-wrap{position:relative;}
+.host-photo-frame{
+  background:var(--white); padding:14px 14px 34px; box-shadow:var(--shadow);
+  transform:rotate(-3deg); border-radius:4px;
+}
+.host-photo-frame img{border-radius:2px; aspect-ratio:1/1; object-fit:cover; width:100%; height:auto; display:block;}
+.host-photo-frame .cap{font-family:'Caveat',cursive; text-align:center; font-size:1.15rem; margin-top:10px; color:var(--chocolate-soft);}
+.host h2{font-size:clamp(1.9rem,3.6vw,2.5rem);}
+.host .name{font-family:'Caveat',cursive; font-size:1.4rem; color:var(--poppy-dark); display:block; margin-bottom:4px;}
+
+/* ---------- details ---------- */
+.details{background:var(--chocolate); color:var(--white);}
+.details .wrap{text-align:center;}
+.details h2{color:var(--white); font-size:clamp(2rem,4vw,2.6rem);}
+
+/* ---------- faq ---------- */
+.faq{background:var(--white);}
+.faq h2{text-align:center; font-size:clamp(2rem,4vw,2.6rem);}
+.faq-list{max-width:700px; margin:40px auto 0; display:grid; gap:14px;}
+details.q{background:var(--cream-light); border-radius:16px; padding:18px 22px;}
+details.q summary{font-weight:700; cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center; font-size:1.03rem;}
+details.q summary::-webkit-details-marker{display:none;}
+details.q summary::after{content:'+'; font-size:1.4rem; color:var(--poppy); margin-left:12px;}
+details.q[open] summary::after{content:'–';}
+details.q p{margin:12px 0 0; font-size:.98rem;}
+details.q ul{margin:12px 0 0; padding-left:20px; display:grid; gap:8px;}
+details.q ul li{font-size:.98rem; line-height:1.5;}
+
+/* ---------- "next page" hand-off block that closes every page ----------
+   Principle 5: contextual links beat navigation. Every page ends by
+   pointing at the gathering, or at what supports it. */
+.handoff{background:var(--cream-light); text-align:center;}
+.handoff .wrap{max-width:640px;}
+.handoff h2{font-size:clamp(1.7rem,3.2vw,2.2rem);}
+.handoff .cta-row{justify-content:center;}
+
+@media (max-width:760px){
+  .site section{padding:76px 0;}
+  .practice .grid, .host .grid{grid-template-columns:1fr;}
+  .host-photo-wrap{max-width:240px; margin:0 auto;}
+  .practice .visual{height:240px; transform:scale(.8);}
+}

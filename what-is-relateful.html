@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Is Relateful — Relateful Gatherings</title>
+<meta name="description" content="A practice of being here, with other people. Explore it one question at a time — what it is, what you actually do, what happens when it gets hard, and whether it's for you.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Quicksand:wght@400;500;600;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+<style>
+  /* ============================================================
+     The question library. Everything here is unique to this page,
+     so it stays local — shared components live in styles.css.
+     Colours, type and radii all come from the site's own system.
+     ============================================================ */
+
+  /* ---------- library shell ---------- */
+  .site .library{background:var(--cream-light); padding-top:52px;}
+  /* wider than the site's default 1040 wrap — three cards plus the topic
+     sidebar don't fit otherwise, and the cards get cramped below ~290px */
+  .library .wrap{max-width:1240px;}
+  .library .layout{display:grid; grid-template-columns:214px 1fr; gap:44px; align-items:start;}
+  /* Grid items default to min-width:auto, so the non-wrapping topic rail
+     would otherwise force the whole column to its full scroll width and
+     push the cards off-screen. */
+  .library .layout > *{min-width:0;}
+
+  /* ---------- topic navigation ---------- */
+  .topics{position:sticky; top:78px;}
+  .topics .kicker{
+    font-size:.72rem; text-transform:uppercase; letter-spacing:.09em;
+    font-weight:700; opacity:.45; margin:0 0 14px 14px;
+  }
+  .topic-list{display:grid; gap:4px;}
+  .topic-btn{
+    display:block; width:100%; text-align:left; cursor:pointer;
+    font-family:'Quicksand',sans-serif; font-weight:600; font-size:.96rem;
+    color:var(--chocolate); background:transparent; border:none;
+    padding:11px 16px; border-radius:100px; transition:background .15s ease;
+  }
+  .topic-btn:hover{background:rgba(42,39,38,0.05);}
+  .topic-btn[aria-current="true"]{background:var(--white); box-shadow:0 4px 14px rgba(42,39,38,0.09);}
+  .topic-btn[aria-current="true"] .dot{background:var(--poppy);}
+  .topic-btn .dot{
+    display:inline-block; width:7px; height:7px; border-radius:50%;
+    background:rgba(42,39,38,0.22); margin-right:9px; vertical-align:middle;
+  }
+  .topics .aside-note{
+    margin-top:26px; padding:20px 22px; background:var(--white); border-radius:22px;
+    font-size:.9rem; line-height:1.6;
+  }
+  .topics .aside-note .script{font-size:1.25rem; color:var(--poppy-dark); display:block; margin-bottom:4px;}
+  .topics .aside-note p{margin:0 0 .8em;}
+  .topics .aside-note p:last-child{margin:0;}
+  .topics .aside-note a{color:var(--poppy-dark); font-weight:700; text-decoration:none;}
+  .topics .aside-note a:hover{text-decoration:underline;}
+
+  /* ---------- topic header ---------- */
+  .topic-head{display:flex; align-items:baseline; gap:16px; margin-bottom:22px; flex-wrap:wrap;}
+  .topic-head h1{font-size:clamp(1.6rem,3.2vw,2.1rem); margin:0;}
+  .topic-head .count{font-size:.85rem; opacity:.55; font-weight:600; margin-left:auto; white-space:nowrap;}
+  .topic-head .blurb{width:100%; margin:0; font-size:.98rem; opacity:.75;}
+
+  /* ---------- question cards ---------- */
+  .cards{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; align-items:stretch;}
+  .qcard{
+    background:var(--white); border-radius:24px; overflow:hidden;
+    box-shadow:0 6px 20px rgba(42,39,38,0.07);
+    display:flex; flex-direction:column;
+    transition:box-shadow .18s ease, transform .18s ease;
+  }
+  .qcard:hover{box-shadow:0 12px 30px rgba(42,39,38,0.11); transform:translateY(-2px);}
+  /* An opened card takes the full row rather than leaving a tall gap
+     beside its neighbour — and the wider measure suits long-form reading. */
+  .qcard.is-open{box-shadow:0 14px 34px rgba(42,39,38,0.13); transform:none; grid-column:1 / -1;}
+  .qcard.is-open .deeper p, .qcard.is-open .deeper ul{max-width:620px;}
+  .qcard:target{outline:2px solid var(--poppy); outline-offset:3px;}
+  .qcard .body{padding:24px 24px 20px; flex:1 0 auto;}
+  .qcard .num{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:38px; height:38px; border-radius:50%; margin-bottom:14px;
+    font-family:'Caveat',cursive; font-weight:700; font-size:1.25rem; color:var(--chocolate);
+  }
+  /* One tint per card drives both the number badge and the "tell me more"
+     strip, so they can't drift apart. */
+  .qcard{--card-tint:var(--poppy-light);}
+  .qcard:nth-child(3n+2){--card-tint:rgba(124,138,99,0.32);}
+  .qcard:nth-child(3n+3){--card-tint:var(--cream);}
+  .qcard .num{background:var(--card-tint);}
+  .qcard h3{font-size:1.16rem; line-height:1.25; margin:0 0 10px;}
+  .qcard .short{margin:0; font-size:1rem; line-height:1.6;}
+  .qcard .example{
+    margin-top:18px; padding-left:14px; border-left:3px solid var(--poppy);
+  }
+  .qcard .example .label{
+    display:block; font-size:.7rem; text-transform:uppercase; letter-spacing:.09em;
+    font-weight:700; color:var(--poppy-dark); margin-bottom:5px;
+  }
+  .qcard .example p{
+    margin:0; font-family:'Fraunces',serif; font-style:italic; font-size:.96rem;
+    line-height:1.55; color:var(--chocolate-soft);
+  }
+
+  /* the deeper layer */
+  .qcard .deeper{border-top:1px solid rgba(42,39,38,0.09); padding:20px 24px 4px; display:none;}
+  .qcard.is-open .deeper{display:block;}
+  .qcard .deeper p{font-size:.97rem; line-height:1.68;}
+  .qcard .deeper ul{margin:0 0 1em; padding-left:20px; display:grid; gap:7px;}
+  .qcard .deeper li{font-size:.97rem; line-height:1.55;}
+  .qcard .related{margin-top:4px; padding-bottom:18px;}
+  .qcard .related .label{
+    display:block; font-size:.7rem; text-transform:uppercase; letter-spacing:.09em;
+    font-weight:700; opacity:.45; margin-bottom:9px;
+  }
+  .qcard .related .chips{display:flex; flex-wrap:wrap; gap:8px;}
+  .qcard .related a{
+    display:inline-block; background:var(--cream-light); color:var(--chocolate);
+    border-radius:100px; padding:6px 14px; font-size:.84rem; font-weight:600;
+    text-decoration:none; line-height:1.35; transition:background .15s ease;
+  }
+  .qcard .related a:hover{background:var(--cream);}
+
+  /* the "tell me more" strip */
+  .qcard .more{
+    margin-top:auto; width:100%; cursor:pointer; text-align:left;
+    background:var(--card-tint); border:none; border-top:1px solid rgba(42,39,38,0.06);
+    font-family:'Quicksand',sans-serif; font-weight:700; font-size:.92rem;
+    color:var(--poppy-dark); padding:14px 24px;
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    transition:background .15s ease;
+  }
+  .qcard .more:hover{filter:brightness(.955);}
+  .qcard .more .arrow{transition:transform .2s ease; font-size:1.05rem;}
+  .qcard.is-open .more .arrow{transform:rotate(90deg);}
+
+  /* ---------- closing invitation ---------- */
+  .site .invite{background:var(--white);}
+  .invite .wrap{max-width:720px;}
+  .invite-box{
+    background:var(--cream-light); border-radius:32px; padding:44px 40px;
+    display:flex; align-items:center; gap:34px; flex-wrap:wrap;
+  }
+  .invite-box .rings{position:relative; width:112px; height:112px; flex-shrink:0;}
+  .invite-box .rings span{position:absolute; border-radius:50%; animation:ring-pulse 3.6s ease-in-out infinite;}
+  .invite-box .rings .r1{inset:0; border:2px dashed var(--poppy); opacity:.5; animation-delay:.6s;}
+  .invite-box .rings .r2{inset:24px; border:2px solid var(--sage); opacity:.6; animation-delay:.3s;}
+  .invite-box .rings .r3{inset:44px; background:var(--poppy); opacity:.85;}
+  .invite-box .txt{flex:1; min-width:250px;}
+  .invite-box h2{font-size:clamp(1.6rem,3vw,2.1rem); margin-bottom:.35em;}
+  .invite-box p{margin:0 0 4px;}
+  .invite-box .cta-row{margin-top:20px;}
+
+  .kb-noscript{
+    max-width:680px; margin:0 auto; padding:26px; background:var(--white);
+    border-radius:22px; border-left:4px solid var(--poppy);
+  }
+
+  /* align-items:stretch already equalises each row; this floor makes the rows
+     match each other too, so the whole grid reads as one tidy block. Desktop
+     only — on a phone it would just pad short cards with empty space. Any card
+     whose content runs longer still grows, taking its row with it. */
+  @media (min-width:861px){
+    .qcard:not(.is-open){min-height:415px;}
+  }
+
+  @media (max-width:1120px){
+    .cards{grid-template-columns:repeat(2,1fr);}
+  }
+
+  @media (max-width:860px){
+    /* subtle top-right accent on desktop, but it dominates a phone screen
+       and the top of this page is meant to be content, not decoration */
+    .library .blob{display:none;}
+    .library .layout{grid-template-columns:1fr; gap:26px;}
+    /* topics become a horizontally scrollable rail, content-first */
+    .topics{position:static;}
+    .topics .kicker{margin-left:0;}
+    .topic-list{
+      display:flex; gap:9px; overflow-x:auto; padding:2px 24px 10px;
+      margin:0 -24px; -webkit-overflow-scrolling:touch; scrollbar-width:none;
+    }
+    .topic-list::-webkit-scrollbar{display:none;}
+    .topic-btn{width:auto; white-space:nowrap; background:var(--white); flex-shrink:0; font-size:.9rem; padding:10px 16px;}
+    .topic-btn[aria-current="true"]{background:var(--chocolate); color:var(--cream-light);}
+    .topics .aside-note{display:none;}
+    .cards{grid-template-columns:1fr; gap:16px;}
+    .qcard .body{padding:20px 20px 18px;}
+    .qcard .more{padding:13px 20px;}
+    .qcard .deeper{padding:18px 20px 4px;}
+    .invite-box{padding:34px 26px; gap:24px;}
+    .invite-box .rings{display:none;}
+  }
+</style>
+</head>
+<body class="site">
+
+  <!-- ============ NAV ============ -->
+  <nav class="sitenav">
+    <div class="wrap">
+      <a class="brand" href="/">Relateful Gatherings</a>
+      <div class="links">
+        <a href="/what-is-relateful" aria-current="page">What Is Relateful</a>
+        <a href="/practice">Practice On Your Own</a>
+      </div>
+      <a href="/gatherings" class="btn btn-primary nav-cta">Come to a Gathering</a>
+    </div>
+  </nav>
+
+  <!-- ============ THE QUESTION LIBRARY ============ -->
+  <section class="library" id="library">
+    <div class="blob b1" style="opacity:.4;"></div>
+    <div class="wrap">
+      <div class="layout">
+
+        <!-- topic navigation -->
+        <div class="topics">
+          <p class="kicker">Explore by topic</p>
+          <div class="topic-list" id="topic-list" role="tablist" aria-label="Question topics"></div>
+          <div class="aside-note">
+            <span class="script">still the best answer</span>
+            <p>Reading about this only goes so far. It's ninety minutes on a Tuesday, and you can decide the rest afterwards.</p>
+            <p><a href="/gatherings">Come to a gathering →</a></p>
+          </div>
+        </div>
+
+        <!-- questions -->
+        <div class="panel">
+          <div class="topic-head">
+            <h1 id="topic-title"></h1>
+            <span class="count" id="topic-count"></span>
+            <p class="blurb" id="topic-blurb"></p>
+          </div>
+          <div class="cards" id="cards"></div>
+          <noscript>
+            <div class="kb-noscript">
+              <p><strong>This page needs JavaScript to open its questions.</strong> The same material,
+              written long-form, is on the <a href="/basics">Relateful basics</a> page — or the
+              practical questions are answered on the <a href="/gatherings">gatherings page</a>.</p>
+            </div>
+          </noscript>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CLOSING INVITATION ============ -->
+  <section class="invite">
+    <div class="wrap">
+      <div class="invite-box">
+        <div class="rings" aria-hidden="true"><span class="r1"></span><span class="r2"></span><span class="r3"></span></div>
+        <div class="txt">
+          <h2>Experience it for yourself.</h2>
+          <p>The best way to understand this is to sit in it. Tuesdays, 7:00–8:30pm at Activation Studios in NoDa — twelve spots, $10–20 sliding scale.</p>
+          <div class="cta-row">
+            <a href="/gatherings" class="btn btn-primary">Find a Gathering →</a>
+            <a href="/practice" class="btn btn-ghost">Practice on your own</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <div class="wrap">
+      <div class="wordmark">Relateful Gatherings</div>
+      <p style="opacity:.8; font-size:.92rem;">Tuesdays, 7:00pm · $10–20 sliding scale</p>
+      <div class="links">
+        <a href="/what-is-relateful">What Is Relateful</a>
+        <a href="/gatherings">Come to a Gathering</a>
+        <a href="/practice">Practice On Your Own</a>
+        <a href="/basics">Relateful basics</a>
+        <a href="https://instagram.com/chinesedragonprincess" target="_blank" rel="noopener">📷 @chinesedragonprincess</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ STICKY CTA BAR ============ -->
+  <div class="stickybar" id="stickybar">
+    <span class="meta">Tuesdays · 7:00pm · $10–20</span>
+    <a href="/gatherings" class="btn btn-primary">Come to a Gathering →</a>
+  </div>
+
+  <script src="/questions.js"></script>
+  <script src="/library.js"></script>
+  <script src="/sticky.js"></script>
+</body>
+</html>
