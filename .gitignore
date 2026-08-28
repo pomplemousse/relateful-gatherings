@@ -6,3 +6,8 @@ _to_delete/
 
 # macOS
 .DS_Store
+
+# Internal reference docs — kept on this machine only.
+# The repo is public, and Netlify serves whatever is committed, so these
+# must never be tracked: brand guide, working copy doc, and session notes.
+internal/
