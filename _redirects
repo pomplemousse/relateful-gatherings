@@ -1,0 +1,5 @@
+# The /gatherings page was removed — tickets are handled entirely by Luma.
+# Anyone holding the old link (shared, bookmarked, printed) lands on the
+# ticket page instead of a 404.
+/gatherings   https://luma.com/joinrelateful   301
+/gatherings/* https://luma.com/joinrelateful   301
