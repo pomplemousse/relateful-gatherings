@@ -205,7 +205,9 @@ footer .links a{text-decoration:underline; margin:0 8px;}
   .sitenav .wrap{gap:8px; padding:9px 16px;}
   .sitenav .brand{font-size:.92rem; order:1;}
   .sitenav .nav-cta{order:2; padding:8px 13px; font-size:.78rem;}
-  .sitenav .links{order:3; width:100%; gap:18px;}
+  /* four links no longer fit one phone row, so let them wrap to a second
+     line rather than get clipped by body{overflow-x:hidden} */
+  .sitenav .links{order:3; width:100%; gap:9px 18px; flex-wrap:wrap;}
   .sitenav .links a{font-size:.84rem;}
 }
 
