@@ -579,7 +579,7 @@ const QUESTIONS = [
       or significant emotional challenges that this kind of environment could stir up — or if you’re
       not confident you can look after your own needs while you’re here — I’d genuinely rather you
       waited.</p>
-      <p>That’s not a door closing. It’s a weekly gathering; it’ll still be here.</p>`,
+      <p>That’s not a door closing. It’s a gathering every other week; it’ll still be here.</p>`,
     related:['safety','who-is-this-for']
   },
   {
@@ -597,8 +597,8 @@ const QUESTIONS = [
   {
     topic:'should-i-come', id:'logistics',
     q:'When, where, and how much?',
-    short:'Tuesdays 7–8:30pm at Activation Studios in NoDa. $10–20 sliding scale, ticket in advance.',
-    example:'First gathering: Tuesday, September 15.',
+    short:'Every other Tuesday, 7–8:30pm at Activation Studios in NoDa. $10–20 sliding scale, ticket in advance.',
+    example:'Next gathering: {{NEXT_GATHERING}}.',
     deep:`<p>516 E 15th St, Charlotte, NC 28206. Twelve people maximum, which is what keeps it a
       practice rather than an event.</p>
       <p>Tickets are $10–20 sliding scale, booked in advance — pick whichever tier feels right.

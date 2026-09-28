@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Relateful Gatherings — Explore what emerges, in connection</title>
-<meta name="description" content="A weekly gathering for people tired of small talk and hungry for something real. Tuesdays at 7pm in Charlotte. No experience needed.">
+<meta name="description" content="A gathering every other Tuesday for people tired of small talk and hungry for something real. 7pm in Charlotte. No experience needed.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Quicksand:wght@400;500;600;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
@@ -38,19 +38,19 @@
     <div class="blob b2"></div>
     <div class="dots" style="top:120px; left:6%;"></div>
     <div class="wrap">
-      <span class="eyebrow">a weekly practice space</span>
+      <span class="eyebrow">a practice space, every other week</span>
       <h1>Relateful Gatherings</h1>
       <p class="hook">"Explore what emerges in the present moment — in connection."</p>
       <p class="sub">For people who are tired of performing and hungry for something real.</p>
 
       <div class="meta-pill">
-        <span>🗓️ Tuesdays</span>
+        <span>🗓️ Every other Tuesday</span>
         <span>🕖 7–8:30pm</span>
         <span>💛 $10–20 · ticket required</span>
         <span>📍 Activation Studios, NoDa</span>
       </div>
 
-      <p class="launch-note">✨ First gathering: Tuesday, September 15</p>
+      <p class="launch-note">✨ Next gathering: {{NEXT_GATHERING}}</p>
 
       <div class="cta-row">
         <a href="https://luma.com/joinrelateful" target="_blank" rel="noopener" class="btn btn-primary">Get a Ticket →</a>
@@ -115,7 +115,7 @@
   <!-- ============ HAND-OFF ============ -->
   <section class="handoff">
     <div class="wrap">
-      <h2>The next one is Tuesday, September 15.</h2>
+      <h2>The next one is {{NEXT_GATHERING}}.</h2>
       <p>7:00–8:30pm at Activation Studios in NoDa. Twelve spots, $10–20 sliding scale, ticket in advance.</p>
       <div class="cta-row">
         <a href="https://luma.com/joinrelateful" target="_blank" rel="noopener" class="btn btn-primary">Get a Ticket →</a>
@@ -127,7 +127,7 @@
   <footer>
     <div class="wrap">
       <div class="wordmark">Relateful Gatherings</div>
-      <p style="opacity:.8; font-size:.92rem;">Tuesdays, 7:00pm · $10–20 sliding scale</p>
+      <p style="opacity:.8; font-size:.92rem;">Every other Tuesday, 7:00pm · $10–20 sliding scale</p>
       <div class="links">
         <a href="/what-is-relateful">What Is Relateful</a>
         <a href="https://luma.com/joinrelateful" target="_blank" rel="noopener">Get a Ticket</a>
@@ -140,10 +140,11 @@
 
   <!-- ============ STICKY CTA BAR ============ -->
   <div class="stickybar" id="stickybar">
-    <span class="meta">Tuesdays · 7:00pm · $10–20</span>
+    <span class="meta">Every other Tuesday · 7:00pm · $10–20</span>
     <a href="https://luma.com/joinrelateful" target="_blank" rel="noopener" class="btn btn-primary">Get a Ticket →</a>
   </div>
 
+  <script src="/gathering-schedule.js"></script>
   <script src="/sticky.js"></script>
 </body>
 </html>

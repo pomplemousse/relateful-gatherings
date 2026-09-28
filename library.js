@@ -108,6 +108,7 @@
 
     cardsEl.innerHTML = '';
     qs.forEach(function (q, i) { cardsEl.appendChild(card(q, i + 1)); });
+    if (window.RelatefulSchedule) window.RelatefulSchedule.fillPlaceholders(cardsEl);
 
     if (pushHash && history.replaceState) history.replaceState(null, '', '#' + topic.id);
   }
